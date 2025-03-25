@@ -1,6 +1,9 @@
 import sqlite3
+import os
 
-DB_NAME = "files.db"
+DB_DIR = "/app_data"
+DB_NAME = f"{DB_DIR}/files.db"
+os.makedirs(DB_DIR, exist_ok=True)
 
 def save_file_info(name: str, filename: str, path: str):
     conn = sqlite3.connect(DB_NAME)

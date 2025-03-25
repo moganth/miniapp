@@ -1,7 +1,8 @@
 import sqlite3
-
-DB_NAME = "files.db"
-
+import os
+DB_DIR = "/app_data"
+DB_NAME = f"{DB_DIR}/files.db"
+os.makedirs(DB_DIR, exist_ok=True)
 def create_table():
     conn = sqlite3.connect(DB_NAME)
     cursor = conn.cursor()
