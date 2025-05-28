@@ -2,7 +2,7 @@
 FROM python:3.12.3
 
 #installing docker cli
-RUN apt-get update && apt-get install -y docker.io
+#RUN apt-get update && apt-get install -y docker.io
 
 # Set the working directory in the container
 WORKDIR /app
