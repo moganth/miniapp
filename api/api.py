@@ -6,8 +6,20 @@ from services.service import save_file_info, get_all_files, get_file_path_by_nam
 
 router = APIRouter()
 
-UPLOAD_FOLDER = "uploads"
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+# Use a writable directory instead of relative "uploads" path
+UPLOAD_FOLDER = "/tmp/uploads"
+
+# Add error handling for directory creation
+try:
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+except OSError as e:
+    if e.errno == 30:  # Read-only file system
+        # Fallback to user's home directory
+        UPLOAD_FOLDER = os.path.expanduser("~/plugin_uploads")
+        os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+        print(f"Warning: Using fallback upload directory: {UPLOAD_FOLDER}")
+    else:
+        raise
 
 
 @router.post("/file/{name}")
